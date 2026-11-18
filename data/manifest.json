@@ -1,0 +1,67 @@
+[
+  {
+    "doc_id": "ethics_compliance_committee_charter_2025",
+    "title": "Ethics and Compliance Committee Charter",
+    "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+    "sha256": "5e54affed3c5b95e97d48a6bb0ec6b36065d65277bbb8a9efbd25f629f1d4828",
+    "family": "board",
+    "version": "2025-03-01",
+    "year": 2025,
+    "status": "current",
+    "superseded_by": null,
+    "manual_overrides": [],
+    "word_count": 607,
+    "ingested": true
+  },
+  {
+    "doc_id": "supplier_code_2025",
+    "title": "Lilly Supplier Code of Business Conduct",
+    "source_file": "LSCoBC_2025_EN.pdf",
+    "sha256": "6dadbc8543754d66858c654865dccc16992d77dd6c484b6f1d6b6a83d9427039",
+    "family": "supplier",
+    "version": "15.0",
+    "year": 2025,
+    "status": "current",
+    "superseded_by": null,
+    "manual_overrides": [],
+    "word_count": 1706,
+    "ingested": true
+  },
+  {
+    "doc_id": "supplier_code_2021",
+    "title": "Lilly Supplier Code of Business Conduct",
+    "source_file": "Lilly_SCoBC_2021_EN.pdf",
+    "sha256": "2944b407295e37ce9912dbf7a959b64daa630a00a6c499258a76124f83112a30",
+    "family": "supplier",
+    "version": "13.0",
+    "year": 2021,
+    "status": "superseded",
+    "superseded_by": "supplier_code_2025",
+    "manual_overrides": [],
+    "word_count": 1544,
+    "ingested": true
+  },
+  {
+    "doc_id": "red_book_2026",
+    "title": "Red Book: Code of Business Conduct",
+    "source_file": "Red_Book_English.pdf",
+    "sha256": "e5920cb3097a1b5007f691868a239a237b703ad098278a2ad631c18eef649451",
+    "family": "employee",
+    "version": "2026",
+    "year": 2026,
+    "status": "current",
+    "superseded_by": null,
+    "manual_overrides": [
+      "page 8: red_book_p08.md"
+    ],
+    "word_count": 1575,
+    "ingested": true
+  },
+  {
+    "source_file": "Lilly_SCoBC_2021_EN-2.pdf",
+    "sha256": "2944b407295e37ce9912dbf7a959b64daa630a00a6c499258a76124f83112a30",
+    "status": "duplicate",
+    "duplicate_of": "Lilly_SCoBC_2021_EN.pdf",
+    "ingested": false
+  }
+]
