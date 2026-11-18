@@ -47,13 +47,14 @@ def test_system_prompt_restricts_the_model_to_the_context():
     assert NOT_COVERED in system
 
 
-def test_generate_sends_a_deterministic_request_and_returns_the_text():
+def test_generate_sends_the_prompt_and_returns_the_text():
     client = FakeClient("Four times a year.")
     out = generate_answer("How often does the committee meet?", HITS, client=client)
     assert out == "Four times a year."
     (call,) = client.calls
     system, user = build_prompt("How often does the committee meet?", HITS)
-    assert call["temperature"] == 0
+    # The API rejects sampling parameters for this model, so none may be sent.
+    assert not {"temperature", "top_p", "top_k"} & set(call)
     assert call["system"] == system
     assert call["messages"] == [{"role": "user", "content": user}]
     assert call["model"] and call["max_tokens"] > 0
