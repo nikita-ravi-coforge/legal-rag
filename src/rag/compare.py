@@ -4,7 +4,7 @@ Run:  python -m rag.compare "Which policy covers cooperative learning programs?"
 """
 import sys
 
-from rag.retrieve import hybrid_search
+from rag.retrieve import CURRENT, hybrid_search
 from rag.store import get_collection, vector_search
 
 TOP_K = 4
@@ -21,7 +21,7 @@ def main():
         raise SystemExit('usage: python -m rag.compare "your question"')
     question = " ".join(sys.argv[1:])
     collection = get_collection()
-    vector = vector_search(collection, question, k=TOP_K)
+    vector = vector_search(collection, question, k=TOP_K, where=CURRENT)
     hybrid = hybrid_search(collection, question, k=TOP_K)
 
     print(f"\nQuestion: {question}")

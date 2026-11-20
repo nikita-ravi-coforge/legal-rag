@@ -26,9 +26,9 @@ def get_collection(path=CHROMA_DIR):
     return chromadb.PersistentClient(path=str(path)).get_collection(COLLECTION)
 
 
-def all_chunks(collection):
-    """Every stored chunk with its text and metadata (no embeddings), for keyword search."""
-    got = collection.get(include=["documents", "metadatas"])
+def all_chunks(collection, where=None):
+    """Stored chunks with their text and metadata (no embeddings), for keyword search. `where` filters on metadata."""
+    got = collection.get(where=where, include=["documents", "metadatas"])
     return [{"chunk_id": i, "text": t, "metadata": m}
             for i, t, m in zip(got["ids"], got["documents"], got["metadatas"])]
 
