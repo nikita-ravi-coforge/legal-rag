@@ -1,0 +1,162 @@
+[
+  {
+    "id": "charter-meetings",
+    "type": "semantic",
+    "question": "How many times a year must the ethics and compliance committee meet?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Administrative Matters"}],
+    "expected_keywords": ["four"]
+  },
+  {
+    "id": "charter-min-directors",
+    "type": "semantic",
+    "question": "What is the minimum number of directors on the ethics and compliance committee?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Composition and Term"}],
+    "expected_keywords": ["three"]
+  },
+  {
+    "id": "charter-term-length",
+    "type": "semantic",
+    "question": "How long is the term of an ethics and compliance committee member?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Composition and Term"}],
+    "expected_keywords": ["one-year"]
+  },
+  {
+    "id": "charter-financial-oversight",
+    "type": "semantic",
+    "question": "Which committee has sole oversight of financial compliance?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Duties and Responsibilities"}],
+    "expected_keywords": ["audit committee"]
+  },
+  {
+    "id": "charter-section-name",
+    "type": "section_name",
+    "question": "According to the Composition and Term section, who designates the chair?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Composition and Term"}],
+    "expected_keywords": ["board"]
+  },
+  {
+    "id": "redbook-report-concern",
+    "type": "semantic",
+    "question": "Where can someone submit a concern about a possible violation?",
+    "expected_sources": [{"doc_id": "red_book_2026", "section": "Speaking Up: How to Report a Concern"}],
+    "expected_keywords": ["speakup.lilly.com"]
+  },
+  {
+    "id": "redbook-values",
+    "type": "semantic",
+    "question": "What are Lilly's values?",
+    "expected_sources": [
+      {"doc_id": "red_book_2026", "section": "Our Values"},
+      {"doc_id": "supplier_code_2025", "section": "Introduction"}
+    ],
+    "expected_keywords": ["Integrity", "Excellence", "Respect for People"]
+  },
+  {
+    "id": "redbook-last-step",
+    "type": "semantic",
+    "question": "What is the last step of the Exercise Good Judgment decision tree?",
+    "expected_sources": [{"doc_id": "red_book_2026", "section": "Exercise Good Judgment"}],
+    "expected_keywords": ["Reflect and Learn"]
+  },
+  {
+    "id": "redbook-ai-bias",
+    "type": "semantic",
+    "question": "What does the Red Book say about bias when using artificial intelligence?",
+    "expected_sources": [{"doc_id": "red_book_2026", "section": "Our Responsibilities: Using Artificial Intelligence Responsibly"}],
+    "expected_keywords": ["bias"]
+  },
+  {
+    "id": "redbook-investigations",
+    "type": "semantic",
+    "question": "Are the details of an investigation kept confidential?",
+    "expected_sources": [{"doc_id": "red_book_2026", "section": "Speaking Up: Investigations Overview"}],
+    "expected_keywords": ["confidential"]
+  },
+  {
+    "id": "supplier-excluded-employee",
+    "type": "semantic",
+    "question": "How quickly must a supplier tell Lilly that one of its employees has been excluded from doing business with a government?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Reporting"}],
+    "expected_keywords": ["five"]
+  },
+  {
+    "id": "supplier-death-report",
+    "type": "semantic",
+    "question": "How soon must a known or suspected death be reported?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Reporting"}],
+    "expected_keywords": ["24 hours"]
+  },
+  {
+    "id": "supplier-hotline-number",
+    "type": "exact_term",
+    "question": "What is the phone number of the Lilly Ethics & Compliance Hotline?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Reporting"}],
+    "expected_keywords": ["1-800-815-2481"]
+  },
+  {
+    "id": "supplier-cooperative-learning",
+    "type": "exact_phrase",
+    "question": "What does the policy say about cooperative learning programs?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Workplace"}],
+    "expected_keywords": ["child labor"]
+  },
+  {
+    "id": "supplier-impaired",
+    "type": "paraphrase",
+    "question": "Is it acceptable to show up to the job drunk or high?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Workplace"}],
+    "expected_keywords": ["impaired"]
+  },
+  {
+    "id": "supplier-adverse-event",
+    "type": "multi_chunk",
+    "question": "How quickly must an adverse event be reported, and how is it reported from outside the US?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Reporting"}],
+    "expected_keywords": ["one business day", "Lilly.com"]
+  },
+  {
+    "id": "retaliation",
+    "type": "cross_document",
+    "question": "Does Lilly tolerate retaliation against people who report a concern?",
+    "expected_sources": [
+      {"doc_id": "red_book_2026", "section": "Our Responsibilities: Speaking Up"},
+      {"doc_id": "supplier_code_2025", "section": "Reporting"}
+    ],
+    "expected_keywords": ["retaliation"]
+  },
+  {
+    "id": "supplier-purchasing",
+    "type": "data_quality",
+    "question": "What is required before a supplier purchases goods or services?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Transactions"}],
+    "expected_keywords": ["third party risk management"]
+  },
+  {
+    "id": "supplier-gifts-on-behalf",
+    "type": "data_quality",
+    "question": "Can a supplier offer gifts or donations on Lilly's behalf?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Interactions"}],
+    "expected_keywords": ["written approval"]
+  },
+  {
+    "id": "supplier-current-version",
+    "type": "current_version",
+    "question": "What is the current version number of the Supplier Code of Business Conduct?",
+    "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Document Version"}],
+    "expected_keywords": ["15.0"]
+  },
+  {
+    "id": "vacation-days",
+    "type": "out_of_scope",
+    "question": "How many vacation days do employees get per year?",
+    "expected_sources": [],
+    "expected_keywords": []
+  },
+  {
+    "id": "gift-dollar-limit",
+    "type": "unanswerable",
+    "question": "What is the maximum dollar value of a gift that can be accepted from a supplier?",
+    "expected_sources": [],
+    "expected_keywords": []
+  }
+]
