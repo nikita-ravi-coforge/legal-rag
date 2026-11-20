@@ -20,7 +20,7 @@ SCENARIOS = {"semantic", "exact_term", "exact_phrase", "section_name", "paraphra
              "cross_document", "data_quality", "current_version", "out_of_scope", "unanswerable"}
 
 # Recall@4 measured when each retriever was added. A change that drops below this fails.
-RECALL_FLOOR = {"vector": 0.95, "hybrid": 0.95}
+RECALL_FLOOR = {"vector": 0.95, "hybrid": 0.95, "hybrid+rerank": 1.0}
 
 
 def source(hit_or_chunk):
