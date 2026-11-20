@@ -20,7 +20,7 @@ SCENARIOS = {"semantic", "exact_term", "exact_phrase", "section_name", "paraphra
              "cross_document", "data_quality", "current_version", "out_of_scope", "unanswerable"}
 
 # Recall@4 measured when each retriever was added. A change that drops below this fails.
-RECALL_FLOOR = {"vector": 0.0, "hybrid": 0.0}
+RECALL_FLOOR = {"vector": 0.80, "hybrid": 0.95}
 
 
 def source(hit_or_chunk):
@@ -130,13 +130,15 @@ def test_recall_does_not_drop_below_the_measured_floor(name, retrieval):
     assert retrieval[name]["recall"] >= RECALL_FLOOR[name]
 
 
-def gold_case(q):
-    """A question the best retriever is known to miss runs as a strict xfail: it must be un-marked once fixed."""
-    marks = [pytest.mark.xfail(reason=q["known_miss"], strict=True)] if "known_miss" in q else []
-    return pytest.param(q, id=q["id"], marks=marks)
+def gold_cases(questions, known_failure):
+    """A question with a known-failure note in the gold file runs as a strict xfail,
+    so the note has to be removed as soon as a later step fixes it."""
+    return [pytest.param(q, id=q["id"], marks=[pytest.mark.xfail(reason=q[known_failure], strict=True)]
+                         if known_failure in q else [])
+            for q in questions]
 
 
-@pytest.mark.parametrize("q", [gold_case(q) for q in ANSWERABLE])
+@pytest.mark.parametrize("q", gold_cases(ANSWERABLE, "known_miss"))
 def test_best_retriever_finds_the_chunk_with_the_answer(q, retrieval):
     assert retrieval[BEST]["ranks"][q["id"]] is not None
 
@@ -147,6 +149,6 @@ def answers(collection):
 
 
 @pytest.mark.live
-@pytest.mark.parametrize("q", GOLD, ids=lambda q: q["id"])
+@pytest.mark.parametrize("q", gold_cases(GOLD, "known_wrong_answer"))
 def test_live_answer_contains_the_expected_information(q, answers):
     assert answers["correct"][q["id"]], answers["answers"][q["id"]]
