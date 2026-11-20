@@ -21,6 +21,7 @@ from rag.config import RESULTS_DIR, ROOT
 from rag.generate import NOT_COVERED
 from rag.retrieve import hybrid_search, retrieve
 from rag.store import get_collection, vector_search
+from rag.trace import setup
 
 GOLD_PATH = ROOT / "data" / "gold_set.json"
 RESULTS_PATH = RESULTS_DIR / "eval_results.json"
@@ -79,6 +80,7 @@ def evaluate_answers(collection, gold, ask=answer):
 
 
 def main():
+    setup()  # tracing to Phoenix, only if PHOENIX_TRACING=1
     collection, gold = get_collection(), load_gold()
     results = {"k": TOP_K, "questions": len(gold),
                "retrieval": {name: evaluate_retrieval(collection, search, gold)

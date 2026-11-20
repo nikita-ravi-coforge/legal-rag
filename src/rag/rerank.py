@@ -8,6 +8,7 @@ is only run on the few candidates the first-stage searches return.
 from functools import lru_cache
 
 from rag.config import RERANK_MODEL
+from rag.trace import documents, span
 
 
 @lru_cache(maxsize=1)
@@ -25,6 +26,13 @@ def rerank(question, hits, top_n=4):
     """Score every hit against the question and return the top_n, best first, each with a `rerank_score`."""
     if not hits:
         return []
-    scores = model().predict([(question, passage(h)) for h in hits])
-    ranked = sorted(zip(hits, scores), key=lambda pair: pair[1], reverse=True)
-    return [{**hit, "rerank_score": float(score)} for hit, score in ranked[:top_n]]
+    with span("rerank", "RERANKER", question) as s:
+        scores = model().predict([(question, passage(h)) for h in hits])
+        ranked = sorted(zip(hits, scores), key=lambda pair: pair[1], reverse=True)
+        top = [{**hit, "rerank_score": float(score)} for hit, score in ranked[:top_n]]
+        s.set_attributes({
+            "reranker.query": question, "reranker.model_name": RERANK_MODEL, "reranker.top_k": top_n,
+            **documents(hits, score=lambda h: h.get("rrf_score"), prefix="reranker.input_documents"),
+            **documents(top, score=lambda h: h["rerank_score"], prefix="reranker.output_documents"),
+        })
+        return top

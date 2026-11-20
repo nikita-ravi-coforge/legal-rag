@@ -5,6 +5,7 @@ from functools import lru_cache
 from dotenv import load_dotenv
 
 from rag.config import ROOT
+from rag.trace import span
 
 load_dotenv(ROOT / ".env")
 
@@ -37,13 +38,17 @@ def default_client():
 
 def generate_answer(question, hits, client=None, model=None):
     system, user = build_prompt(question, hits)
-    response = (client or default_client()).messages.create(
-        model=model or ANSWER_MODEL,
-        max_tokens=MAX_ANSWER_TOKENS,
-        # No temperature: the API rejects it for this model ("Extra inputs are not
-        # permitted"), so output is not guaranteed identical between runs. The
-        # strict system prompt keeps answers stable; tests match key phrases.
-        system=system,
-        messages=[{"role": "user", "content": user}],
-    )
-    return "".join(block.text for block in response.content if block.type == "text").strip()
+    model = model or ANSWER_MODEL
+    with span("generate_answer", "LLM", user) as s:
+        response = (client or default_client()).messages.create(
+            model=model,
+            max_tokens=MAX_ANSWER_TOKENS,
+            # No temperature: the API rejects it for this model ("Extra inputs are not
+            # permitted"), so output is not guaranteed identical between runs. The
+            # strict system prompt keeps answers stable; tests match key phrases.
+            system=system,
+            messages=[{"role": "user", "content": user}],
+        )
+        text = "".join(block.text for block in response.content if block.type == "text").strip()
+        s.set_attributes({"llm.model_name": model, "output.value": text})
+        return text
