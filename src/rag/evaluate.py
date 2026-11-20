@@ -19,7 +19,7 @@ import sys
 from rag.ask import answer
 from rag.config import RESULTS_DIR, ROOT
 from rag.generate import NOT_COVERED
-from rag.retrieve import hybrid_search
+from rag.retrieve import hybrid_search, retrieve
 from rag.store import get_collection, vector_search
 
 GOLD_PATH = ROOT / "data" / "gold_set.json"
@@ -27,8 +27,8 @@ RESULTS_PATH = RESULTS_DIR / "eval_results.json"
 TOP_K = 4
 
 # Every retrieval variant built so far. Each takes (collection, question, k).
-RETRIEVERS = {"vector": vector_search, "hybrid": hybrid_search}
-BEST = "hybrid"  # the variant the per-question gold tests hold to account
+RETRIEVERS = {"vector": vector_search, "hybrid": hybrid_search, "hybrid+rerank": retrieve}
+BEST = "hybrid+rerank"  # the variant the per-question gold tests hold to account
 
 
 def load_gold():
@@ -87,18 +87,18 @@ def main():
         results["answers"] = evaluate_answers(collection, gold)
 
     columns = list(RETRIEVERS) + (["answer"] if "answers" in results else [])
-    print(f"\n{'question':<30}{'type':<17}" + "".join(f"{c:>9}" for c in columns))
+    print(f"\n{'question':<30}{'type':<17}" + "".join(f"{c:>15}" for c in columns))
     for q in gold:
         cells = [results["retrieval"][name]["ranks"].get(q["id"], "n/a") or "miss" for name in RETRIEVERS]
         if "answers" in results:
             cells.append("ok" if results["answers"]["correct"][q["id"]] else "WRONG")
-        print(f"{q['id']:<30}{q['type']:<17}" + "".join(f"{c!s:>9}" for c in cells))
+        print(f"{q['id']:<30}{q['type']:<17}" + "".join(f"{c!s:>15}" for c in cells))
 
     print(f"\nRank at which the answer is fully retrieved, top {TOP_K} (miss = not retrieved, n/a = no source exists)\n")
     for name, report in results["retrieval"].items():
-        print(f"{name:<8} recall@{TOP_K} {report['recall']:.0%}   stale rate {report['stale_rate']:.0%}")
+        print(f"{name:<14} recall@{TOP_K} {report['recall']:.0%}   stale rate {report['stale_rate']:.0%}")
     if "answers" in results:
-        print(f"answers  accuracy {results['answers']['accuracy']:.0%}")
+        print(f"{'answers':<14} accuracy {results['answers']['accuracy']:.0%}")
 
     RESULTS_DIR.mkdir(exist_ok=True)
     RESULTS_PATH.write_text(json.dumps(results, indent=2) + "\n")
