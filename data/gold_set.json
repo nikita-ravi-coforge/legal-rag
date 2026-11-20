@@ -43,7 +43,6 @@
   },
   {
     "id": "redbook-values",
-    "known_wrong_answer": "The answer pipeline is still vector-only, which does not retrieve the Our Values chunk. Hybrid does.",
     "type": "semantic",
     "question": "What are Lilly's values?",
     "expected_sources": [
@@ -96,7 +95,7 @@
   },
   {
     "id": "supplier-cooperative-learning",
-    "known_wrong_answer": "The answer pipeline is still vector-only, which misses this exact phrase. Hybrid finds it.",
+    "known_wrong_answer": "The answer pipeline is still vector-only, which has the chunk at rank 6, outside the top 4. Hybrid ranks it first.",
     "type": "exact_phrase",
     "question": "What does the policy say about cooperative learning programs?",
     "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Workplace"}],
@@ -104,7 +103,7 @@
   },
   {
     "id": "supplier-impaired",
-    "known_miss": "Hybrid: none of the question's words are in the answer, so keyword search adds noise, and the superseded 2021 copy takes a top-4 slot. The current chunk is at vector rank 5.",
+    "known_miss": "Hybrid only: vector search finds the answer at rank 2, but none of the question's words are in it, so the keyword half adds five unrelated chunks and fusion pushes it out of the top 4.",
     "type": "paraphrase",
     "question": "Is it acceptable to show up to the job drunk or high?",
     "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Workplace"}],
@@ -143,7 +142,6 @@
   },
   {
     "id": "supplier-purchasing",
-    "known_wrong_answer": "Planted data issue: the answer is built from the superseded 2021 chunk, which lacks the third party risk management requirement.",
     "type": "data_quality",
     "question": "What is required before a supplier purchases goods or services?",
     "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Transactions"}],

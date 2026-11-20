@@ -10,4 +10,4 @@ MANIFEST_PATH = ROOT / "data" / "manifest.json"
 CHROMA_DIR = ROOT / "chroma_db"
 RESULTS_DIR = ROOT / "results"
 
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
