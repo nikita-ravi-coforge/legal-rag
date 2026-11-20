@@ -20,7 +20,7 @@ SCENARIOS = {"semantic", "exact_term", "exact_phrase", "section_name", "paraphra
              "cross_document", "data_quality", "current_version", "out_of_scope", "unanswerable"}
 
 # Recall@4 measured when each retriever was added. A change that drops below this fails.
-RECALL_FLOOR = {"vector": 0.95, "hybrid": 0.95, "hybrid+rerank": 1.0}
+RECALL_FLOOR = {"vector": 0.95, "hybrid": 0.95, "hybrid+rerank": 1.0, "current only": 1.0}
 
 
 def source(hit_or_chunk):
@@ -128,6 +128,12 @@ def retrieval(collection):
 @pytest.mark.parametrize("name", list(RECALL_FLOOR))
 def test_recall_does_not_drop_below_the_measured_floor(name, retrieval):
     assert retrieval[name]["recall"] >= RECALL_FLOOR[name]
+
+
+def test_the_final_pipeline_never_retrieves_a_superseded_chunk(retrieval):
+    assert BEST == "current only"
+    assert retrieval[BEST]["stale_rate"] == 0
+    assert retrieval["hybrid+rerank"]["stale_rate"] > 0  # the same pipeline, before the source data was fixed
 
 
 def gold_cases(questions, known_failure):

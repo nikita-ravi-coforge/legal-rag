@@ -157,7 +157,8 @@
     "type": "current_version",
     "question": "What is the current version number of the Supplier Code of Business Conduct?",
     "expected_sources": [{"doc_id": "supplier_code_2025", "section": "Document Version"}],
-    "expected_keywords": ["15.0"]
+    "expected_keywords": ["15.0"],
+    "forbidden_keywords": ["13.0"]
   },
   {
     "id": "vacation-days",
