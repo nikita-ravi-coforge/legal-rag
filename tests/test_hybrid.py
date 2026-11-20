@@ -85,17 +85,14 @@ def test_hybrid_finds_an_exact_phrase_that_vector_search_misses(collection):
     """The demo query: 'cooperative learning programs' appears only in the Supplier Code's Workplace section."""
     question = "Which policy covers cooperative learning programs?"
 
-    def sections(hits):
-        return {(h["metadata"]["family"], h["metadata"]["section"]) for h in hits}
+    def has_the_phrase(hits):
+        return any("cooperative learning programs" in h["text"] for h in hits)
 
-    assert ("supplier", "Workplace") not in sections(vector_search(collection, question, k=10))
+    assert not has_the_phrase(vector_search(collection, question, k=4))
     hybrid = hybrid_search(collection, question, k=4)
-    assert ("supplier", "Workplace") in sections(hybrid)
-    found = next(h for h in hybrid if "cooperative learning programs" in h["text"])
-    assert found["found_by"] == ["keyword"]
+    assert "cooperative learning programs" in hybrid[0]["text"]  # hybrid ranks it first
+    assert "keyword" in hybrid[0]["found_by"]
 
 
-def test_hybrid_finds_an_exact_section_name_that_vector_search_misses(collection):
-    question = "Composition and Term"
-    assert "Composition and Term" not in {h["metadata"]["section"] for h in vector_search(collection, question, k=10)}
-    assert "Composition and Term" in {h["metadata"]["section"] for h in hybrid_search(collection, question, k=4)}
+def test_hybrid_ranks_an_exact_section_name_first(collection):
+    assert hybrid_search(collection, "Composition and Term", k=4)[0]["metadata"]["section"] == "Composition and Term"

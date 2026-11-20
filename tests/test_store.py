@@ -3,9 +3,9 @@ from rag.embed import embed_documents, embed_query
 from rag.store import vector_search
 
 
-def test_embeddings_are_384_dim_unit_vectors():
+def test_embeddings_are_1024_dim_unit_vectors():
     for vec in embed_documents(["a policy sentence"]) + [embed_query("a question?")]:
-        assert len(vec) == 384
+        assert len(vec) == 1024
         assert abs(sum(x * x for x in vec) - 1.0) < 1e-3
 
 

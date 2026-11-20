@@ -111,6 +111,20 @@
     "expected_keywords": ["impaired"]
   },
   {
+    "id": "charter-statutes-reworded",
+    "type": "hard_paraphrase",
+    "question": "Who watches for fresh statutes that might spoil how outsiders regard the firm or the earnings?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Purpose"}],
+    "expected_keywords": ["ethics and compliance committee"]
+  },
+  {
+    "id": "charter-statutes-typo",
+    "type": "hard_paraphrase",
+    "question": "Who is responsible for identifying new statues that might impact the perception of the firm or its earnings?",
+    "expected_sources": [{"doc_id": "ethics_compliance_committee_charter_2025", "section": "Purpose"}],
+    "expected_keywords": ["ethics and compliance committee"]
+  },
+  {
     "id": "supplier-adverse-event",
     "type": "multi_chunk",
     "question": "How quickly must an adverse event be reported, and how is it reported from outside the US?",
