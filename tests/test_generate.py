@@ -1,4 +1,4 @@
-"""Step 4: basic RAG. Question -> top-k chunks -> prompt -> Claude -> answer.
+"""Step 4: the RAG pipeline. Question -> top-k chunks -> prompt -> Claude -> answer.
 
 The first group runs with a fake LLM client (no network). The `live` tests call
 the real API and are skipped when no key is configured.
@@ -68,6 +68,7 @@ def test_pipeline_retrieves_top_k_and_passes_them_to_the_llm(collection):
     assert len(result["hits"]) == 4
     assert result["hits"][0]["metadata"]["section"] == "Administrative Matters"
     assert result["hits"][0]["text"] in client.calls[0]["messages"][0]["content"]
+    assert "rerank_score" in result["hits"][0]  # the pipeline is hybrid search + rerank
 
 
 @pytest.mark.live

@@ -11,3 +11,4 @@ CHROMA_DIR = ROOT / "chroma_db"
 RESULTS_DIR = ROOT / "results"
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
+RERANK_MODEL = os.getenv("RERANK_MODEL", "BAAI/bge-reranker-base")
