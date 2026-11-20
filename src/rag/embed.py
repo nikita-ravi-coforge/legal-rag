@@ -4,7 +4,7 @@ from functools import lru_cache
 
 from rag.config import EMBEDDING_MODEL
 
-# bge-small-en-v1.5 reads at most 512 tokens; anything longer is silently cut off.
+# bge-large-en-v1.5 reads at most 512 tokens; anything longer is silently cut off.
 MAX_TOKENS = 512
 
 # The bge models are trained with this instruction on the *query* side only.

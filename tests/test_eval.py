@@ -16,11 +16,11 @@ from rag.generate import NOT_COVERED
 GOLD = load_gold()
 ANSWERABLE = [q for q in GOLD if q["expected_sources"]]
 
-SCENARIOS = {"semantic", "exact_term", "exact_phrase", "section_name", "paraphrase", "multi_chunk",
+SCENARIOS = {"semantic", "exact_term", "exact_phrase", "section_name", "paraphrase", "hard_paraphrase", "multi_chunk",
              "cross_document", "data_quality", "current_version", "out_of_scope", "unanswerable"}
 
 # Recall@4 measured when each retriever was added. A change that drops below this fails.
-RECALL_FLOOR = {"vector": 0.80, "hybrid": 0.95}
+RECALL_FLOOR = {"vector": 0.95, "hybrid": 0.95}
 
 
 def source(hit_or_chunk):

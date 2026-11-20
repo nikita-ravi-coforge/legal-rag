@@ -2,9 +2,9 @@
 from rag.minimal_loop import TEXTS, build_collection, embed, query
 
 
-def test_embedding_is_a_384_dim_vector():
+def test_embedding_is_a_1024_dim_vector():
     vectors = embed(["hello"])
-    assert len(vectors) == 1 and len(vectors[0]) == 384
+    assert len(vectors) == 1 and len(vectors[0]) == 1024
 
 
 def test_both_texts_are_stored():
