@@ -1,6 +1,7 @@
 pypdf
 sentence-transformers
 chromadb
+opentelemetry-sdk
 anthropic
 python-dotenv
 pytest

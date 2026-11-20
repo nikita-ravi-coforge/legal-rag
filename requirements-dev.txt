@@ -1,0 +1,5 @@
+# Optional: only needed to send traces to Arize Phoenix (PHOENIX_TRACING=1).
+# The Phoenix server itself is not installed here: it requires anthropic<2, which
+# conflicts with this project. Run it on its own with:  uvx arize-phoenix serve
+-r requirements.txt
+arize-phoenix-otel

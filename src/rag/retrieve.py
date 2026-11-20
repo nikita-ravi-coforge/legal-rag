@@ -8,6 +8,7 @@ in. A chunk both searches found beats one that only a single search found.
 from rag.keyword import keyword_search
 from rag.rerank import rerank
 from rag.store import all_chunks, vector_search
+from rag.trace import documents, span
 
 CANDIDATES = 10  # how many hits each search contributes
 RRF_K = 60       # standard constant; it stops rank 1 from dominating everything else
@@ -30,10 +31,16 @@ def rrf_merge(rankings):
 
 def hybrid_search(collection, question, k=5):
     """Top-k chunks from vector search and keyword search combined."""
-    return rrf_merge({
-        "vector": vector_search(collection, question, k=CANDIDATES),
-        "keyword": keyword_search(all_chunks(collection), question, k=CANDIDATES),
-    })[:k]
+    with span("hybrid_search", "RETRIEVER", question) as fused_span:
+        with span("vector_search", "RETRIEVER", question) as s:
+            vector = vector_search(collection, question, k=CANDIDATES)
+            s.set_attributes(documents(vector, score=lambda h: 1 - h["distance"]))  # cosine similarity
+        with span("keyword_search", "RETRIEVER", question) as s:
+            keyword = keyword_search(all_chunks(collection), question, k=CANDIDATES)
+            s.set_attributes(documents(keyword, score=lambda h: h["keyword_score"]))
+        fused = rrf_merge({"vector": vector, "keyword": keyword})[:k]
+        fused_span.set_attributes(documents(fused, score=lambda h: h["rrf_score"]))
+        return fused
 
 
 def retrieve(collection, question, k=4):

@@ -9,6 +9,7 @@ import sys
 from rag.generate import ANSWER_MODEL, generate_answer
 from rag.retrieve import retrieve
 from rag.store import get_collection
+from rag.trace import setup, span
 
 TOP_K = 4
 
@@ -16,13 +17,17 @@ TOP_K = 4
 def answer(question, k=TOP_K, collection=None, client=None):
     """Retrieve the top-k chunks (hybrid search + rerank) and have Claude answer from them."""
     collection = collection or get_collection()
-    hits = retrieve(collection, question, k=k)
-    return {"question": question, "answer": generate_answer(question, hits, client=client), "hits": hits}
+    with span("rag.answer", "CHAIN", question) as s:
+        hits = retrieve(collection, question, k=k)
+        text = generate_answer(question, hits, client=client)
+        s.set_attribute("output.value", text)
+        return {"question": question, "answer": text, "hits": hits}
 
 
 def main():
     if len(sys.argv) < 2:
         raise SystemExit('usage: python -m rag.ask "your question"')
+    setup()  # tracing to Phoenix, only if PHOENIX_TRACING=1
     result = answer(" ".join(sys.argv[1:]))
 
     print(f"\nQuestion: {result['question']}\n")
