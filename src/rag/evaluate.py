@@ -10,11 +10,13 @@ Metrics
   recall@k      share of questions whose answer is in the top k chunks: the chunks
                 from the expected source contain every expected keyword
   stale rate    share of retrieved chunks that come from a superseded document
-  accuracy      share of answers that contain every expected keyword; a question
+  accuracy      share of answers that contain every expected keyword and no
+                forbidden one (text only the superseded document has); a question
                 with no source in the corpus must get the "not covered" reply
 """
 import json
 import sys
+from functools import partial
 
 from rag.ask import answer
 from rag.config import RESULTS_DIR, ROOT
@@ -28,8 +30,15 @@ RESULTS_PATH = RESULTS_DIR / "eval_results.json"
 TOP_K = 4
 
 # Every retrieval variant built so far. Each takes (collection, question, k).
-RETRIEVERS = {"vector": vector_search, "hybrid": hybrid_search, "hybrid+rerank": retrieve}
-BEST = "hybrid+rerank"  # the variant the per-question gold tests hold to account
+# The first three search every document, including the superseded one; the last
+# is the pipeline as shipped, which searches current documents only.
+RETRIEVERS = {
+    "vector": vector_search,
+    "hybrid": partial(hybrid_search, current_only=False),
+    "hybrid+rerank": partial(retrieve, current_only=False),
+    "current only": retrieve,
+}
+BEST = "current only"  # the variant the per-question gold tests hold to account
 
 
 def load_gold():
@@ -69,6 +78,8 @@ def evaluate_retrieval(collection, search, gold, k=TOP_K):
 def answer_is_correct(text, q):
     if not q["expected_sources"]:
         return NOT_COVERED.lower() in text.lower()
+    if any(keyword.lower() in text.lower() for keyword in q.get("forbidden_keywords", [])):
+        return False  # the answer repeats something only the superseded document says
     return all(keyword.lower() in text.lower() for keyword in q["expected_keywords"])
 
 

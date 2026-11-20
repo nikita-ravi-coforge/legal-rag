@@ -12,6 +12,8 @@ from rag.trace import documents, span
 
 CANDIDATES = 10  # how many hits each search contributes
 RRF_K = 60       # standard constant; it stops rank 1 from dominating everything else
+# Metadata filter that leaves out superseded documents. The status comes from data/manifest.json.
+CURRENT = {"status": "current"}
 
 
 def rrf_merge(rankings):
@@ -29,21 +31,26 @@ def rrf_merge(rankings):
     return sorted(merged.values(), key=lambda h: h["rrf_score"], reverse=True)
 
 
-def hybrid_search(collection, question, k=5):
-    """Top-k chunks from vector search and keyword search combined."""
+def hybrid_search(collection, question, k=5, current_only=True):
+    """Top-k chunks from vector search and keyword search combined.
+
+    By default only current documents are searched. current_only=False also
+    searches superseded ones, which reproduces the planted data quality issue.
+    """
+    where = CURRENT if current_only else None
     with span("hybrid_search", "RETRIEVER", question) as fused_span:
         with span("vector_search", "RETRIEVER", question) as s:
-            vector = vector_search(collection, question, k=CANDIDATES)
+            vector = vector_search(collection, question, k=CANDIDATES, where=where)
             s.set_attributes(documents(vector, score=lambda h: 1 - h["distance"]))  # cosine similarity
         with span("keyword_search", "RETRIEVER", question) as s:
-            keyword = keyword_search(all_chunks(collection), question, k=CANDIDATES)
+            keyword = keyword_search(all_chunks(collection, where), question, k=CANDIDATES)
             s.set_attributes(documents(keyword, score=lambda h: h["keyword_score"]))
         fused = rrf_merge({"vector": vector, "keyword": keyword})[:k]
         fused_span.set_attributes(documents(fused, score=lambda h: h["rrf_score"]))
         return fused
 
 
-def retrieve(collection, question, k=4):
+def retrieve(collection, question, k=4, current_only=True):
     """The full retrieval pipeline: every hybrid candidate, reranked, top k kept."""
-    candidates = hybrid_search(collection, question, k=2 * CANDIDATES)
+    candidates = hybrid_search(collection, question, k=2 * CANDIDATES, current_only=current_only)
     return rerank(question, candidates, top_n=k)
