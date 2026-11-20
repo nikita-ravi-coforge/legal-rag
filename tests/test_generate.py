@@ -82,3 +82,60 @@ def test_live_answer_is_grounded_in_the_retrieved_chunk(collection):
 def test_live_out_of_scope_question_is_declined(collection):
     result = answer("How many vacation days do employees get per year?", collection=collection)
     assert NOT_COVERED.lower() in result["answer"].lower()
+
+
+# --- source attribution (Step 11) ---------------------------------------------
+
+from rag.generate import SYSTEM, cited_sources  # noqa: E402
+
+ATTRIBUTED = [
+    {"chunk_id": "charter:administrative-matters:00", "text": "Meets four times per year.",
+     "metadata": {"title": "Committee Charter", "section": "Administrative Matters", "version": "2025-03-01",
+                  "status": "current", "doc_id": "charter", "source_file": "charter.pdf"}},
+    {"chunk_id": "supplier:interactions:00", "text": "No gifts.",
+     "metadata": {"title": "Supplier Code", "section": "Interactions", "version": "15.0",
+                  "status": "current", "doc_id": "supplier", "source_file": "supplier.pdf"}},
+]
+
+
+def test_system_prompt_asks_for_numbered_citations():
+    assert "[1]" in SYSTEM and "cite" in SYSTEM.lower()
+
+
+def test_cited_sources_maps_citation_numbers_to_documents_and_sections():
+    sources = cited_sources("It meets four times per year [1].", ATTRIBUTED)
+    assert sources == [{"number": 1, "document": "Committee Charter", "version": "2025-03-01",
+                        "section": "Administrative Matters", "source_file": "charter.pdf",
+                        "chunk_id": "charter:administrative-matters:00"}]
+
+
+def test_cited_sources_lists_each_source_once_in_the_order_cited():
+    sources = cited_sources("No gifts [2]. Four meetings [1][2].", ATTRIBUTED)
+    assert [s["number"] for s in sources] == [2, 1]
+
+
+def test_a_citation_number_that_matches_no_excerpt_is_ignored():
+    assert [s["number"] for s in cited_sources("See [1] and [7].", ATTRIBUTED)] == [1]
+
+
+def test_an_answer_without_citations_is_attributed_to_every_chunk_it_was_given():
+    assert [s["number"] for s in cited_sources("It meets four times per year.", ATTRIBUTED)] == [1, 2]
+
+
+def test_a_declined_answer_has_no_sources():
+    assert cited_sources(NOT_COVERED, ATTRIBUTED) == []
+
+
+def test_pipeline_returns_the_sources_behind_the_answer(collection):
+    result = answer("How many times a year must the ethics committee meet?",
+                    collection=collection, client=FakeClient("At least four times per year [1]."))
+    (source,) = result["sources"]
+    assert source["document"] == "Ethics and Compliance Committee Charter"
+    assert source["section"] == "Administrative Matters"
+    assert source["chunk_id"] == result["hits"][0]["chunk_id"]
+
+
+@pytest.mark.live
+def test_live_answer_cites_the_section_that_contains_the_answer(collection):
+    result = answer("How many times a year must the ethics and compliance committee meet?", collection=collection)
+    assert "Administrative Matters" in {s["section"] for s in result["sources"]}
