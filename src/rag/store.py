@@ -26,6 +26,13 @@ def get_collection(path=CHROMA_DIR):
     return chromadb.PersistentClient(path=str(path)).get_collection(COLLECTION)
 
 
+def all_chunks(collection):
+    """Every stored chunk with its text and metadata (no embeddings), for keyword search."""
+    got = collection.get(include=["documents", "metadatas"])
+    return [{"chunk_id": i, "text": t, "metadata": m}
+            for i, t, m in zip(got["ids"], got["documents"], got["metadatas"])]
+
+
 def vector_search(collection, question, k=5, where=None):
     """Top-k chunks by cosine distance. `where` is a Chroma metadata filter."""
     res = collection.query(query_embeddings=[embed_query(question)], n_results=k, where=where)
