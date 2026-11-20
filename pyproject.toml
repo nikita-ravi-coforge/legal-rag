@@ -13,3 +13,4 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["live: calls the real LLM API; skipped when ANTHROPIC_API_KEY is not set"]
