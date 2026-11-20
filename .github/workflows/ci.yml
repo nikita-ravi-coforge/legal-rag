@@ -32,3 +32,9 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: pytest -v
+
+      - name: Evaluation report
+        # Prints recall@4 and stale rate for every retrieval variant against the gold set.
+        run: |
+          python -m rag.index
+          python -m rag.evaluate
