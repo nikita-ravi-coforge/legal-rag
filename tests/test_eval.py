@@ -158,3 +158,9 @@ def answers(collection):
 @pytest.mark.parametrize("q", gold_cases(GOLD, "known_wrong_answer"))
 def test_live_answer_contains_the_expected_information(q, answers):
     assert answers["correct"][q["id"]], answers["answers"][q["id"]]
+
+
+@pytest.mark.live
+def test_live_answers_cite_a_source_that_contains_the_answer(answers):
+    """Attribution: for answerable questions, a cited source is one of the expected sources."""
+    assert answers["attribution"] >= 0.95

@@ -1,5 +1,6 @@
 """Stage 5: generation. Retrieved chunks + question -> prompt -> Claude -> answer."""
 import os
+import re
 from functools import lru_cache
 
 from dotenv import load_dotenv
@@ -19,7 +20,8 @@ SYSTEM = f"""You are an internal assistant that answers questions about company 
 
 Answer using only the numbered policy excerpts in the user's message. Do not use outside knowledge and do not guess.
 If the excerpts do not contain the answer, reply with exactly this sentence and nothing else: {NOT_COVERED}
-Keep the answer short and factual: one to four sentences, using the policy's own terms."""
+Keep the answer short and factual: one to four sentences, using the policy's own terms.
+Cite the excerpt each statement comes from by its number in square brackets, like [1]."""
 
 
 def build_prompt(question, hits):
@@ -28,6 +30,25 @@ def build_prompt(question, hits):
         f"[{i}] {h['metadata']['title']} | {h['metadata']['section']}\n{h['text']}"
         for i, h in enumerate(hits, start=1))
     return SYSTEM, f"Policy excerpts:\n\n{excerpts}\n\nQuestion: {question}"
+
+
+def cited_sources(text, hits):
+    """The chunks an answer cites, as source records (document, version, section), in the order cited.
+
+    The LLM cites excerpts by number, and excerpt [n] is hits[n-1]. An answer
+    with no citation is attributed to every chunk it was given. A declined
+    answer has no sources.
+    """
+    if NOT_COVERED.lower() in text.lower():
+        return []
+    cited = [int(n) for n in dict.fromkeys(re.findall(r"\[(\d+)\]", text))]
+    numbers = [n for n in cited if 1 <= n <= len(hits)] or range(1, len(hits) + 1)
+    return [{"number": n,
+             "document": hits[n - 1]["metadata"]["title"],
+             "version": hits[n - 1]["metadata"]["version"],
+             "section": hits[n - 1]["metadata"]["section"],
+             "source_file": hits[n - 1]["metadata"]["source_file"],
+             "chunk_id": hits[n - 1]["chunk_id"]} for n in numbers]
 
 
 @lru_cache(maxsize=1)

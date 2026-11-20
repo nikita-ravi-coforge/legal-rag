@@ -10,6 +10,7 @@ Metrics
   recall@k      share of questions whose answer is in the top k chunks: the chunks
                 from the expected source contain every expected keyword
   stale rate    share of retrieved chunks that come from a superseded document
+  attribution   share of answers that cite one of the expected sources
   accuracy      share of answers that contain every expected keyword and no
                 forbidden one (text only the superseded document has); a question
                 with no source in the corpus must get the "not covered" reply
@@ -83,11 +84,22 @@ def answer_is_correct(text, q):
     return all(keyword.lower() in text.lower() for keyword in q["expected_keywords"])
 
 
+def cites_expected_source(sources, q):
+    """True when a source the answer cited is one of the gold question's expected sources."""
+    return any({"doc_id": s["chunk_id"].split(":")[0], "section": s["section"]} in q["expected_sources"]
+               for s in sources)
+
+
 def evaluate_answers(collection, gold, ask=answer):
     """Generate an answer for every gold question (one LLM call each) and score it."""
-    answers = {q["id"]: ask(q["question"], collection=collection)["answer"] for q in gold}
+    results = {q["id"]: ask(q["question"], collection=collection) for q in gold}
+    answers = {qid: r["answer"] for qid, r in results.items()}
+    sources = {qid: r.get("sources", []) for qid, r in results.items()}
     correct = {q["id"]: answer_is_correct(answers[q["id"]], q) for q in gold}
-    return {"accuracy": sum(correct.values()) / len(gold), "correct": correct, "answers": answers}
+    answerable = [q for q in gold if q["expected_sources"]]
+    attributed = sum(cites_expected_source(sources[q["id"]], q) for q in answerable)
+    return {"accuracy": sum(correct.values()) / len(gold), "attribution": attributed / len(answerable),
+            "correct": correct, "answers": answers, "sources": sources}
 
 
 def main():
@@ -111,7 +123,8 @@ def main():
     for name, report in results["retrieval"].items():
         print(f"{name:<14} recall@{TOP_K} {report['recall']:.0%}   stale rate {report['stale_rate']:.0%}")
     if "answers" in results:
-        print(f"{'answers':<14} accuracy {results['answers']['accuracy']:.0%}")
+        print(f"{'answers':<14} accuracy {results['answers']['accuracy']:.0%}   "
+              f"attribution {results['answers']['attribution']:.0%} (a cited source contains the answer)")
 
     RESULTS_DIR.mkdir(exist_ok=True)
     RESULTS_PATH.write_text(json.dumps(results, indent=2) + "\n")
