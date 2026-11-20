@@ -9,8 +9,8 @@ Three groups of tests:
 """
 import pytest
 
-from rag.evaluate import (BEST, RETRIEVERS, answer_is_correct, evaluate_answers,
-                          evaluate_retrieval, first_rank, load_gold)
+from rag.evaluate import (BEST, RETRIEVERS, answer_is_correct, answer_rank, evaluate_answers,
+                          evaluate_retrieval, load_gold)
 from rag.generate import NOT_COVERED
 
 GOLD = load_gold()
@@ -28,8 +28,8 @@ def source(hit_or_chunk):
     return {"doc_id": m["doc_id"], "section": m["section"]}
 
 
-def hit(doc_id, section, status="current"):
-    return {"metadata": {"doc_id": doc_id, "section": section, "status": status}}
+def hit(doc_id, section, text="", status="current"):
+    return {"text": text, "metadata": {"doc_id": doc_id, "section": section, "status": status}}
 
 
 # --- 1. the gold set is sound -------------------------------------------------
@@ -68,10 +68,20 @@ def test_the_multi_chunk_question_really_needs_two_chunks(chunks):
 
 # --- 2. the scoring functions ---------------------------------------------------
 
-def test_first_rank_is_the_position_of_the_first_expected_source():
-    expected = [{"doc_id": "d", "section": "S"}]
-    assert first_rank([hit("x", "S"), hit("d", "T"), hit("d", "S")], expected) == 3
-    assert first_rank([hit("x", "S")], expected) is None
+def test_answer_rank_is_where_the_expected_source_supplies_the_keyword():
+    q = {"expected_sources": [{"doc_id": "d", "section": "S"}], "expected_keywords": ["Four"]}
+    hits = [hit("x", "S", "four times"),      # has the keyword, but is the wrong document
+            hit("d", "S", "meets quarterly"),  # right section, but not the chunk with the answer
+            hit("d", "S", "four times")]
+    assert answer_rank(hits, q) == 3
+    assert answer_rank(hits[:2], q) is None
+
+
+def test_answer_rank_waits_until_every_keyword_is_covered():
+    q = {"expected_sources": [{"doc_id": "d", "section": "S"}], "expected_keywords": ["one day", "website"]}
+    hits = [hit("d", "S", "within one day"), hit("x", "T", "other"), hit("d", "S", "use the website")]
+    assert answer_rank(hits, q) == 3
+    assert answer_rank(hits[:1], q) is None
 
 
 def test_answer_needs_every_keyword_ignoring_case():
@@ -87,12 +97,12 @@ def test_a_question_with_no_source_must_be_declined():
 
 
 def test_evaluate_retrieval_reports_recall_ranks_and_stale_rate():
-    gold = [{"id": "q1", "question": "one", "expected_sources": [{"doc_id": "d", "section": "S"}]},
-            {"id": "q2", "question": "two", "expected_sources": [{"doc_id": "d", "section": "T"}]},
-            {"id": "q3", "question": "three", "expected_sources": []}]
+    gold = [{"id": "q1", "question": "one", "expected_sources": [{"doc_id": "d", "section": "S"}], "expected_keywords": ["four"]},
+            {"id": "q2", "question": "two", "expected_sources": [{"doc_id": "d", "section": "T"}], "expected_keywords": ["five"]},
+            {"id": "q3", "question": "three", "expected_sources": [], "expected_keywords": []}]
 
     def search(collection, question, k):  # always returns the same two chunks, one of them stale
-        return [hit("old", "S", status="superseded"), hit("d", "S")]
+        return [hit("old", "S", "four", status="superseded"), hit("d", "S", "four")]
 
     report = evaluate_retrieval(None, search, gold, k=2)
     assert report["ranks"] == {"q1": 2, "q2": None}  # q3 has no source, so it is not scored
@@ -127,7 +137,7 @@ def gold_case(q):
 
 
 @pytest.mark.parametrize("q", [gold_case(q) for q in ANSWERABLE])
-def test_best_retriever_finds_the_expected_source(q, retrieval):
+def test_best_retriever_finds_the_chunk_with_the_answer(q, retrieval):
     assert retrieval[BEST]["ranks"][q["id"]] is not None
 
 
