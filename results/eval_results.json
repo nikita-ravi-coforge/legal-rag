@@ -117,6 +117,7 @@
   },
   "answers": {
     "accuracy": 1.0,
+    "attribution": 1.0,
     "correct": {
       "charter-meetings": true,
       "charter-min-directors": true,
@@ -144,30 +145,318 @@
       "gift-dollar-limit": true
     },
     "answers": {
-      "charter-meetings": "The committee must meet **at least four times per year** [1]. It must also meet with the audit committee at least annually [1], including jointly at least annually to review major non-financial compliance matters [2].",
-      "charter-min-directors": "The ethics and compliance committee must consist of **no fewer than three non-employee directors**, each of whom must meet the New York Stock Exchange standards for director independence [1].",
-      "charter-term-length": "Ethics and compliance committee members are appointed by the board for **one-year terms**. They serve such terms as the board may determine, or until their earlier removal, resignation, or death [1].",
-      "charter-financial-oversight": "The **audit committee** has sole oversight over matters of financial compliance, including accounting, auditing, financial reporting, and related investor disclosures [1]. The ethics and compliance committee has primary oversight of all other areas (\"non-financial compliance\"), and the two committees meet jointly at least annually to review major non-financial compliance matters [1].",
-      "charter-section-name": "According to the Composition and Term section, the chair is designated by the board.",
-      "redbook-report-concern": "Under the Red Book, anyone, whether working for Lilly or not, can submit concerns about possible violations of laws and regulations, the Red Book, or company policies or procedures at https://speakup.lilly.com. For suppliers, the Lilly Supplier Code of Business Conduct says to report known or suspected violations to Lilly sponsors or the Lilly Ethics & Compliance Hotline (www.lillyethics.ethicspoint.com, or call 1-800-815-2481).",
-      "redbook-values": "Lilly's values are **Integrity, Excellence, and Respect for People** [1]. Lilly expects its suppliers and employees to conduct Lilly business consistent with these values [1], and the Red Book states that these values \"inspire us to do the right things for the right reasons\" [2].",
-      "redbook-last-step": "The last step is **Step 5: Reflect and Learn**. It asks you to consider what went well, what could be improved, and whether there are lessons to share with your team.",
-      "redbook-ai-bias": "The Red Book states that Lilly strives to mitigate any inherent bias or discrimination in data, information, or algorithms as part of its commitment to the responsible use of Artificial Intelligence [1]. It also commits to protecting against unintended applications, unintended access, and harm associated with AI use, and to promoting transparency [1].",
+      "charter-meetings": "The ethics and compliance committee must meet **at least four times per year** [1]. It must also meet with the audit committee at least annually [1], including jointly to review major non-financial compliance matters [2].",
+      "charter-min-directors": "The ethics and compliance committee must have **no fewer than three non-employee directors**, each of whom must meet the New York Stock Exchange standards for director independence [1].",
+      "charter-term-length": "Committee members are appointed by the board, on the recommendation of the directors and corporate governance committee, for **one-year terms** [1]. They serve such terms as the board may determine, or until their earlier removal, resignation, or death [1].",
+      "charter-financial-oversight": "The audit committee has sole oversight over matters of financial compliance, including accounting, auditing, financial reporting, and related investor disclosures [1]. The ethics and compliance committee has primary oversight of all other areas (\"non-financial compliance\"), and the two committees meet jointly at least annually to review major non-financial compliance matters [1].",
+      "charter-section-name": "The chair is designated by the board [1].",
+      "redbook-report-concern": "Concerns about possible violations of laws, regulations, the Red Book, or company policies or procedures can be submitted at https://speakup.lilly.com [1]. Under the Supplier Code, known or suspected violations should be reported to Lilly sponsors or the Lilly Ethics & Compliance Hotline (www.lillyethics.ethicspoint.com, or call 1-800-815-2481) [2].",
+      "redbook-values": "Lilly's values are **Integrity, Excellence, and Respect for People**, and Lilly expects its suppliers and employees to conduct Lilly business consistent with these values [1]. According to the Red Book, these values \"inspire us to do the right things for the right reasons\" [2].",
+      "redbook-last-step": "The last step is **Step 5: Reflect and Learn**, which asks: What went well? What could be improved? Are there lessons to share with your team? [2]",
+      "redbook-ai-bias": "The Red Book states that the company strives to mitigate any inherent bias or discrimination in data, information, or algorithms when using Artificial Intelligence (AI) [1]. This sits within a broader commitment to responsible AI use, supported by robust governance, clear lines of responsibility, monitoring, and improvement [1].",
       "redbook-investigations": "Yes. Investigation details, including discipline, are treated as confidential [1].",
-      "supplier-excluded-employee": "Under the Supplier Code's Reporting section, a supplier must **report to Lilly within five (5) calendar days** if one of its employees is excluded or restricted in any way from doing business with any government.",
-      "supplier-death-report": "Under the Lilly Supplier Code of Business Conduct, a known or suspected death must be reported **immediately (within 24 hours of receipt)** [1]. In the US, report it by calling The Lilly Answers Center (TLAC) at 1.800.LillyRx (1.800.545.5979) or using an alternative reporting method as determined by the Lilly component [1].",
-      "supplier-hotline-number": "The Lilly Ethics & Compliance Hotline can be reached by phone at **1-800-815-2481** or online at www.lillyethics.ethicspoint.com [1]. This is a different number from The Lilly Answers Center (TLAC), 1.800.545.5979, which is used in the US for reporting deaths, suspect products, adverse events, and product complaints [1].",
-      "supplier-cooperative-learning": "According to the Lilly Supplier Code of Business Conduct [1], cooperative learning programs are an example of an exception to the child labor prohibition. The policy states, \"We do not use child labor (except as consistent with applicable law, such as cooperative learning programs).\" The excerpts say nothing more about these programs.",
-      "supplier-impaired": "No. The Lilly Supplier Code of Business Conduct says, \"we ensure that we are not impaired with drugs or alcohol while at work so that we can be fully engaged\" [2].",
-      "charter-statutes-reworded": "The **ethics and compliance committee** does this. Its charter states that it \"shall review, identify, and when appropriate bring to the attention of the board of directors legal and regulatory trends and issues\" that may have an impact on the company's business operations, financial performance or reputation.",
-      "charter-statutes-typo": "The **ethics and compliance committee** is responsible. Its charter says it \"shall review, identify, and when appropriate bring to the attention of the board of directors legal and regulatory trends and issues... that may have an impact on the business operations, financial performance or reputation of the company.\"",
-      "supplier-adverse-event": "Any **other adverse event** (not a death or suspect product) must be reported **within one business day**, while any known or suspected **death or suspect product** must be reported **immediately (within 24 hours of receipt)** [1]. Outside the US, select your location from the **globe link** in the upper right corner of Lilly.com, then click **\"Contact\" or \"Contact Us\"** in the top menu bar to find the appropriate local reporting method [2].",
-      "retaliation": "No. Lilly does not tolerate retaliation for reporting inappropriate conduct, preventing unlawful practices, or participating in an investigation, and it takes appropriate measures to prevent retaliation against persons who make reports [1]. Employees can share concerns openly and honestly, even anonymously, \"knowing that Lilly will not tolerate acts of retaliation\" [2]. Retaliation is also listed as inappropriate conduct that Lilly does not tolerate [3], and concerns are to be resolved \"without retaliation\" [4].",
-      "supplier-purchasing": "Before purchasing goods or services, the policy requires **authorization from procurement**, an **assessment by third party risk management**, and **appropriate supporting contractual documentation** [1]. More broadly, the policy also requires appropriate authority and the required Lilly approvals before acquiring or committing Lilly resources, entering into agreements with external parties, or disbursing Lilly funds [1].",
-      "supplier-gifts-on-behalf": "Only with prior written approval. The Lilly Supplier Code of Business Conduct states, \"We do not allow our suppliers to offer gifts or donations on Lilly's behalf without prior written approval\" [1][2].",
-      "supplier-current-version": "The current version of the Lilly Supplier Code of Business Conduct is **V15.0** (\u00a92025, Eli Lilly and Company) [1].",
+      "supplier-excluded-employee": "Suppliers must report to Lilly **within five (5) calendar days** if one of their employees is excluded or restricted in any way from doing business with any government [1].",
+      "supplier-death-report": "A known or suspected death must be reported immediately, meaning **within 24 hours of receipt** [1]. In the US, it is reported by calling The Lilly Answers Center (TLAC) at 1.800.LillyRx (1.800.545.5979) or through an alternative reporting method determined by the Lilly component [1].",
+      "supplier-hotline-number": "The Lilly Ethics & Compliance Hotline can be reached by calling 1-800-815-2481 or online at www.lillyethics.ethicspoint.com [1]. This is separate from The Lilly Answers Center (TLAC) number, 1.800.LillyRx (1.800.545.5979), which is listed for reporting adverse events and product complaints in the US [1].",
+      "supplier-cooperative-learning": "The Lilly Supplier Code of Business Conduct says \"we do not use child labor (except as consistent with applicable law, such as cooperative learning programs)\" [1]. Cooperative learning programs are given as an example of an exception to the child labor prohibition, permitted only when consistent with applicable law [1].",
+      "supplier-impaired": "No. Under the Lilly Supplier Code of Business Conduct, \"we ensure that we are not impaired with drugs or alcohol while at work so that we can be fully engaged\" [2].",
+      "charter-statutes-reworded": "The **ethics and compliance committee** does this. It reviews and identifies legal and regulatory trends and issues that may affect the company's business operations, financial performance, or reputation, and brings them to the board of directors' attention when appropriate [1].",
+      "charter-statutes-typo": "The **ethics and compliance committee** is responsible. It reviews and identifies legal and regulatory trends and issues that may affect the company's business operations, financial performance, or reputation, and brings them to the board of directors' attention when appropriate [1].",
+      "supplier-adverse-event": "Any known or suspected death or suspect product must be reported immediately (within 24 hours of receipt), and any other adverse event or product complaint within one business day [1]. Outside the US, select your location from the globe link in the upper right corner of Lilly.com, then click \"Contact\" or \"Contact Us\" in the top menu bar to access the appropriate local reporting method [2].",
+      "retaliation": "No, Lilly does not tolerate retaliation for reporting inappropriate conduct, preventing unlawful practices, or participating in an investigation, and it takes appropriate measures to prevent retaliation against persons who make reports [1]. Employees share concerns openly and honestly, even anonymously, knowing Lilly will not tolerate acts of retaliation [2]. Retaliation is listed as inappropriate conduct that is not tolerated [3], and concerns are to be resolved without retaliation [4].",
+      "supplier-purchasing": "Before purchasing goods or services, the policy requires **authorization from procurement**, **assessment by third party risk management**, and **appropriate supporting contractual documentation** [1]. More broadly, there must be appropriate authority and the required Lilly approvals before acquiring or committing Lilly resources, entering into agreements with external parties, or disbursing Lilly funds [1].",
+      "supplier-gifts-on-behalf": "Suppliers may not offer gifts or donations on Lilly's behalf **without prior written approval** [1][2].",
+      "supplier-current-version": "The current version of the Lilly Supplier Code of Business Conduct is **V15.0**, \u00a92025 Eli Lilly and Company [1].",
       "vacation-days": "This is not covered in the provided policy documents.",
       "gift-dollar-limit": "This is not covered in the provided policy documents."
+    },
+    "sources": {
+      "charter-meetings": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Administrative Matters",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:administrative-matters:00"
+        },
+        {
+          "number": 2,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Duties and Responsibilities",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:duties-and-responsibilities:00"
+        }
+      ],
+      "charter-min-directors": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Composition and Term",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:composition-and-term:00"
+        }
+      ],
+      "charter-term-length": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Composition and Term",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:composition-and-term:00"
+        }
+      ],
+      "charter-financial-oversight": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Duties and Responsibilities",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:duties-and-responsibilities:00"
+        }
+      ],
+      "charter-section-name": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Composition and Term",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:composition-and-term:00"
+        }
+      ],
+      "redbook-report-concern": [
+        {
+          "number": 1,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Speaking Up: How to Report a Concern",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:speaking-up-how-to-report-a-concern:00"
+        },
+        {
+          "number": 2,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        }
+      ],
+      "redbook-values": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Introduction",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:introduction:00"
+        },
+        {
+          "number": 2,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "About the Red Book",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:about-the-red-book:00"
+        }
+      ],
+      "redbook-last-step": [
+        {
+          "number": 2,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Exercise Good Judgment",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:exercise-good-judgment:01"
+        }
+      ],
+      "redbook-ai-bias": [
+        {
+          "number": 1,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Our Responsibilities: Using Artificial Intelligence Responsibly",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:our-responsibilities-using-artificial-intelligence-responsibly:00"
+        }
+      ],
+      "redbook-investigations": [
+        {
+          "number": 1,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Speaking Up: Investigations Overview",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:speaking-up-investigations-overview:00"
+        }
+      ],
+      "supplier-excluded-employee": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        }
+      ],
+      "supplier-death-report": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        }
+      ],
+      "supplier-hotline-number": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        }
+      ],
+      "supplier-cooperative-learning": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Workplace",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:workplace:01"
+        }
+      ],
+      "supplier-impaired": [
+        {
+          "number": 2,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Workplace",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:workplace:03"
+        }
+      ],
+      "charter-statutes-reworded": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Purpose",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:purpose:00"
+        }
+      ],
+      "charter-statutes-typo": [
+        {
+          "number": 1,
+          "document": "Ethics and Compliance Committee Charter",
+          "version": "2025-03-01",
+          "section": "Purpose",
+          "source_file": "Final_Ethics_and_Compliance_Committee_Charter_-_3.1.2025.pdf",
+          "chunk_id": "ethics_compliance_committee_charter_2025:purpose:00"
+        }
+      ],
+      "supplier-adverse-event": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        },
+        {
+          "number": 2,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:01"
+        }
+      ],
+      "retaliation": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Reporting",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:reporting:00"
+        },
+        {
+          "number": 2,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Our Responsibilities: Speaking Up",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:our-responsibilities-speaking-up:00"
+        },
+        {
+          "number": 3,
+          "document": "Red Book: Code of Business Conduct",
+          "version": "2026",
+          "section": "Our Responsibilities: Respecting People",
+          "source_file": "Red_Book_English.pdf",
+          "chunk_id": "red_book_2026:our-responsibilities-respecting-people:00"
+        },
+        {
+          "number": 4,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Workplace",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:workplace:00"
+        }
+      ],
+      "supplier-purchasing": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Transactions",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:transactions:00"
+        }
+      ],
+      "supplier-gifts-on-behalf": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Interactions",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:interactions:01"
+        },
+        {
+          "number": 2,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Interactions",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:interactions:00"
+        }
+      ],
+      "supplier-current-version": [
+        {
+          "number": 1,
+          "document": "Lilly Supplier Code of Business Conduct",
+          "version": "15.0",
+          "section": "Document Version",
+          "source_file": "LSCoBC_2025_EN.pdf",
+          "chunk_id": "supplier_code_2025:document-version:00"
+        }
+      ],
+      "vacation-days": [],
+      "gift-dollar-limit": []
     }
   }
 }

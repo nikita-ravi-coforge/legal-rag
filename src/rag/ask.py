@@ -7,7 +7,7 @@ Requires the index (python -m rag.index) and ANTHROPIC_API_KEY in .env.
 """
 import sys
 
-from rag.generate import ANSWER_MODEL, generate_answer
+from rag.generate import ANSWER_MODEL, cited_sources, generate_answer
 from rag.retrieve import retrieve
 from rag.store import get_collection
 from rag.trace import setup, span
@@ -16,13 +16,13 @@ TOP_K = 4
 
 
 def answer(question, k=TOP_K, collection=None, client=None, current_only=True):
-    """Retrieve the top-k chunks (hybrid search + rerank) and have Claude answer from them."""
+    """Retrieve the top-k chunks (hybrid search + rerank), have Claude answer from them, and list the sources it cited."""
     collection = collection or get_collection()
     with span("rag.answer", "CHAIN", question) as s:
         hits = retrieve(collection, question, k=k, current_only=current_only)
         text = generate_answer(question, hits, client=client)
         s.set_attribute("output.value", text)
-        return {"question": question, "answer": text, "hits": hits}
+        return {"question": question, "answer": text, "hits": hits, "sources": cited_sources(text, hits)}
 
 
 def main():
@@ -37,6 +37,11 @@ def main():
     for rank, h in enumerate(result["hits"], start=1):
         print(f"  {rank}. rerank score {h['rerank_score']:.3f}  {h['chunk_id']}  [{h['metadata']['status']}]  (found by {' + '.join(h['found_by'])})")
     print(f"\nAnswer ({ANSWER_MODEL}):\n{result['answer']}\n")
+    print("Sources:" if result["sources"] else "Sources: none (the documents do not cover this question)")
+    for s in result["sources"]:
+        print(f"  [{s['number']}] {s['document']} (version {s['version']}), section \"{s['section']}\"")
+        print(f"      {s['source_file']}  |  chunk {s['chunk_id']}")
+    print()
 
 
 if __name__ == "__main__":
